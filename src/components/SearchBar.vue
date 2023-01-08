@@ -13,7 +13,7 @@
         <button
           class="btn btn-sm btn-gradient-primary"
           type="button"
-          @click="handleClickSearch"
+          @click="handleClickSearch(searchName)"
         >
           Search
         </button>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   state() {
     return {
@@ -36,11 +37,15 @@ export default {
     //   this.$store.commit("setSearchNameMutation", this.searchName);
     // },
 
-    handleClickSearch() {
-      // dispatch 1 cái action setSearchNameAction
-      // đối với actions thì sử dụng dispatch, còn đối với mutations thì sử dụng commit
-      this.$store.dispatch("setSearchNameAction", this.searchName);
-    },
+    // handleClickSearch() {
+    //   // dispatch 1 cái action setSearchNameAction
+    //   // đối với actions thì sử dụng dispatch, còn đối với mutations thì sử dụng commit
+    //   this.$store.dispatch("setSearchNameAction", this.searchName);
+    // },
+
+    ...mapActions({
+      handleClickSearch: "setSearchNameAction",
+    }),
   },
 };
 </script>

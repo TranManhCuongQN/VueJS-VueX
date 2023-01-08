@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-body">
-      <form class="forms-sample">
+      <form class="forms-sample" @submit.prevent="handleSubmitForm">
         <div class="form-group">
           <label for="username">Username</label>
           <input
@@ -9,6 +9,7 @@
             class="form-control"
             id="username"
             placeholder="Username"
+            v-model.trim="userName"
           />
         </div>
         <div class="form-group">
@@ -18,6 +19,7 @@
             class="form-control"
             id="age"
             placeholder="Age"
+            v-model.trim.number="age"
           />
         </div>
         <div class="form-group">
@@ -27,6 +29,7 @@
             class="form-control"
             id="avatar"
             placeholder="avatar"
+            v-model.trim="avatar"
           />
         </div>
         <div class="form-group">
@@ -34,38 +37,62 @@
           <div class="form-row-flex">
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> JavaScript
-                <i class="input-helper"></i
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="JavaScript"
+                  v-model="programmingLanguage" />
+                JavaScript <i class="input-helper"></i
               ></label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> Java
-                <i class="input-helper"></i
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="Java"
+                  v-model="programmingLanguage" />
+                Java <i class="input-helper"></i
               ></label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> PHP
-                <i class="input-helper"></i
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="PHP"
+                  v-model="programmingLanguage" />
+                PHP <i class="input-helper"></i
               ></label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> Python
-                <i class="input-helper"></i
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="Python"
+                  v-model="programmingLanguage" />
+                Python <i class="input-helper"></i
               ></label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> C#
-                <i class="input-helper"></i
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="C#"
+                  v-model="programmingLanguage" />
+                C# <i class="input-helper"></i
               ></label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" /> C/C++
-                <i class="input-helper"></i
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  value="C/C++"
+                  v-model="programmingLanguage" />
+                C/C++ <i class="input-helper"></i
               ></label>
             </div>
           </div>
@@ -80,7 +107,8 @@
                   class="form-check-input"
                   name="gender"
                   id="gender"
-                  value="" />
+                  value="Nam"
+                  v-model="gender" />
                 Nam <i class="input-helper"></i
               ></label>
             </div>
@@ -91,7 +119,8 @@
                   class="form-check-input"
                   name="gender"
                   id="gender"
-                  value="" />
+                  value="Nữ"
+                  v-model="gender" />
                 Nữ <i class="input-helper"></i
               ></label>
             </div>
@@ -102,7 +131,8 @@
                   class="form-check-input"
                   name="gender"
                   id="gender"
-                  value="" />
+                  value="Khác"
+                  v-model="gender" />
                 Khác <i class="input-helper"></i
               ></label>
             </div>
@@ -111,7 +141,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Type User : </label>
           <div class="col-sm-9">
-            <select class="form-control">
+            <select class="form-control" v-model="typeUser">
               <option>Admin</option>
               <option>Client</option>
             </select>
@@ -119,7 +149,12 @@
         </div>
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea class="form-control" id="description" rows="4"></textarea>
+          <textarea
+            class="form-control"
+            id="description"
+            rows="4"
+            v-model.trim="description"
+          ></textarea>
         </div>
         <button type="submit" class="btn btn-gradient-primary mr-2">
           Submit
@@ -131,7 +166,30 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      userName: "",
+      age: "",
+      avatar: "",
+      programmingLanguage: [],
+      gender: "Nam",
+      typeUser: "Admin",
+      description: "",
+    };
+  },
+  methods: {
+    handleSubmitForm() {
+      console.log("userName", this.userName);
+      console.log("age", this.age);
+      console.log("avatar", this.avatar);
+      console.log("programmingLanguage", this.programmingLanguage);
+      console.log("gender", this.gender);
+      console.log("typeUser", this.typeUser);
+      console.log("description", this.description);
+    },
+  },
+};
 </script>
 
 <style>

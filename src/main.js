@@ -54,7 +54,9 @@ const store = createStore({
   },
   actions: {
     setSearchNameAction(context, payload) {
-      context.commit("setSearchNameMutation", payload);
+      setTimeout(() => {
+        context.commit("setSearchNameMutation", payload);
+      }, 2000);
     },
   },
 });
