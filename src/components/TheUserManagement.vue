@@ -38,7 +38,9 @@
         :isOpen="isOpenModalCartList"
         :handelCloseModal="handleCloseModalCartList"
       >
-        <form-add-user></form-add-user>
+        <form-add-user
+          :handleCloseModal="handleCloseModalCartList"
+        ></form-add-user>
       </app-modal>
     </teleport>
   </div>

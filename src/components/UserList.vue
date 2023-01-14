@@ -10,7 +10,8 @@
 
 <script>
 import UserItem from "./UserItem.vue";
-import { mapGetters, mapState } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapGetters, mapActions } = createNamespacedHelpers("user");
 export default {
   components: {
     UserItem,
@@ -61,6 +62,15 @@ export default {
       userListByBoy: "userListByBoy",
       userListBySearchList: "userListBySearchName",
     }),
+  },
+  methods: {
+    ...mapActions({
+      getAllUser: "getAllUserAction",
+    }),
+  },
+  created() {
+    // Nếu viết trong beforeCreate không truy cập được methods (còn beforeMount và mounted chịu trách nhiệm xử lý dom)
+    this.getAllUser();
   },
 };
 </script>
