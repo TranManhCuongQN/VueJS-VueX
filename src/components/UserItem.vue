@@ -46,6 +46,7 @@
 import { createNamespacedHelpers } from "vuex";
 const { mapActions } = createNamespacedHelpers("user");
 import FormAddUser from "./FormAddUser.vue";
+
 export default {
   components: { FormAddUser },
   props: {

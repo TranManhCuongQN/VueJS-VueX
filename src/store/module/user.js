@@ -100,6 +100,7 @@ const actions = {
   },
   async updateUserAction(context, payload) {
     await updateUserApi(payload);
+
     context.dispatch("getAllUserAction");
     context.commit("updateUserMutation", payload);
   },

@@ -19,6 +19,7 @@ export const createUserApi = async (user) => {
 };
 
 export const updateUserApi = async (user) => {
+  console.log(user);
   const res = await axios({
     method: "PUT",
     url: `https://63c2324b8bb1ca34754f1041.mockapi.io/users/${user.id}`,

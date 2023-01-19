@@ -50,25 +50,45 @@
 import FormAddUser from "./FormAddUser.vue";
 import SearchBar from "./SearchBar.vue";
 import UserList from "./UserList.vue";
+import { ref } from "vue";
+
 export default {
   components: {
     FormAddUser,
     SearchBar,
     UserList,
   },
-  data() {
+  // * Composition api (vue3)
+  setup() {
+    const isOpenModalCartList = ref(false);
+
+    function handleOpenModalCartList() {
+      isOpenModalCartList.value = true; // mở modal
+    }
+    function handleCloseModalCartList() {
+      isOpenModalCartList.value = false; // đóng modal
+    }
     return {
-      isOpenModalCartList: false, // đóng modal
+      isOpenModalCartList,
+      handleOpenModalCartList,
+      handleCloseModalCartList,
     };
   },
-  methods: {
-    handleOpenModalCartList() {
-      this.isOpenModalCartList = true; // mở modal
-    },
-    handleCloseModalCartList() {
-      this.isOpenModalCartList = false; // đóng modal
-    },
-  },
+
+  // * Option api (vue2)
+  // data() {
+  //   return {
+  //     isOpenModalCartList: false, // đóng modal
+  //   };
+  // },
+  // methods: {
+  //   handleOpenModalCartList() {
+  //     this.isOpenModalCartList = true; // mở modal
+  //   },
+  //   handleCloseModalCartList() {
+  //     this.isOpenModalCartList = false; // đóng modal
+  //   },
+  // },
 };
 </script>
 

@@ -166,9 +166,11 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
+import { reactive, toRefs } from "vue";
+// import { createNamespacedHelpers, useStore } from "vuex";
+import { useStore } from "vuex";
 // chỉ cần tạo ra 1 createNamespacedHelpers sau đó là cái tên module trỏ tới để lấy ra các actions, getters, state
-const { mapActions } = createNamespacedHelpers("user");
+// const { mapActions } = createNamespacedHelpers("user");
 export default {
   props: {
     userInfo: {
@@ -178,58 +180,110 @@ export default {
       type: Function,
     },
   },
-  data() {
-    return {
-      user: {
-        name: "",
-        age: "",
-        avatar: "",
-        programmingLanguage: [],
-        gender: "Nam",
-        type: "CLIENT",
-        description: "",
-      },
-    };
-  },
-  methods: {
-    //* C1
-    // ...mapActions({
-    //   handleAddUser: "user/addUserAction",
-    //   handleUpdateUser: "user/updateUserAction",
-    // }),
+  //* Composition API
+  setup(props) {
+    const { userInfo } = toRefs(props);
+    const store = useStore();
+    let user = reactive({
+      name: "",
+      age: "",
+      avatar: "",
+      programmingLanguage: [],
+      gender: "Nam",
+      type: "CLIENT",
+      description: "",
+    });
 
-    //* C2 Mặc định những actions ở dưới này thuộc về module user
-    // ...mapActions("user", {
-    //   handleAddUser: "addUserAction",
-    //   handleUpdateUser: "updateUserAction",
-    // }),
+    if (userInfo.value) {
+      user.id = userInfo.value.id;
+      user.name = userInfo.value.name;
+      user.avatar = userInfo.value.avatar;
+      user.age = userInfo.value.age;
+      user.programmingLanguage = userInfo.value.programmingLanguage;
+      user.gender = userInfo.value.gender;
+      user.type = userInfo.value.type;
+      user.description = userInfo.value.description;
+    }
 
-    //* C3
-    ...mapActions({
-      handleAddUser: "addUserAction",
-      handleUpdateUser: "updateUserAction",
-    }),
-    handleSubmit() {
-      if (this.userInfo) {
+    function handleUpdateUser() {
+      store.dispatch("user/updateUserAction", user);
+    }
+
+    function handleAddUser() {
+      store.dispatch("user/addUserAction", user);
+    }
+
+    function handleSubmit() {
+      if (userInfo.value) {
         // Nếu có userInfo thì thực hiện chức năng edit
-        this.handleUpdateUser(this.user);
-        this.handleCloseModal();
+        handleUpdateUser(user);
+        props.handleCloseModal();
       } else {
         // Nếu ko có userInfo thì thực hiện chức năng thêm
-        this.handleAddUser(this.user);
-        this.handleCloseModal();
+        handleAddUser(user);
+        props.handleCloseModal();
       }
-    },
-  },
-  created() {
-    // chuyển đổi props thành data
-    // created chạy trước khi ta render ra giao diện (vì vậy ta set up trước dữ liệu để hiển thị lên người dùng)
-    if (this.userInfo) {
-      // Nếu có userInfo thì gán cho user bởi vì khi thực hiện chức năng thêm sẽ ko có props userInfo
-      // Để tránh vấn đề tham chiếu ta sử dụng spread operator để khởi tạo 1 object mới dữ liệu dữ nguyên chỉ thay đổi địa chie trên ram thôi
-      this.user = { ...this.userInfo };
     }
+    return {
+      user,
+      handleSubmit,
+    };
   },
+
+  //* Options API
+  // data() {
+  //   return {
+  //     user: {
+  //       name: "",
+  //       age: "",
+  //       avatar: "",
+  //       programmingLanguage: [],
+  //       gender: "Nam",
+  //       type: "CLIENT",
+  //       description: "",
+  //     },
+  //   };
+  // },
+  // methods: {
+  //   //* C1
+  // dispatch actions
+  //   // ...mapActions({
+  //   //   handleAddUser: "user/addUserAction",
+  //   //   handleUpdateUser: "user/updateUserAction",
+  //   // }),
+
+  //   //* C2 Mặc định những actions ở dưới này thuộc về module user
+  //   // ...mapActions("user", {
+  //   //   handleAddUser: "addUserAction",
+  //   //   handleUpdateUser: "updateUserAction",
+  //   // }),
+
+  //   //* C3
+  //   ...mapActions({
+  //     handleAddUser: "addUserAction",
+  //     handleUpdateUser: "updateUserAction",
+  //   }),
+  //   handleSubmit() {
+  //     if (this.userInfo) {
+  //       // Nếu có userInfo thì thực hiện chức năng edit
+  //       this.handleUpdateUser(this.user);
+  //       this.handleCloseModal();
+  //     } else {
+  //       // Nếu ko có userInfo thì thực hiện chức năng thêm
+  //       this.handleAddUser(this.user);
+  //       this.handleCloseModal();
+  //     }
+  //   },
+  // },
+  // created() {
+  //   // chuyển đổi props thành data
+  //   // created chạy trước khi ta render ra giao diện (vì vậy ta set up trước dữ liệu để hiển thị lên người dùng)
+  //   if (this.userInfo) {
+  //     // Nếu có userInfo thì gán cho user bởi vì khi thực hiện chức năng thêm sẽ ko có props userInfo
+  //     // Để tránh vấn đề tham chiếu ta sử dụng spread operator để khởi tạo 1 object mới dữ liệu dữ nguyên chỉ thay đổi địa chie trên ram thôi
+  //     this.user = { ...this.userInfo };
+  //   }
+  // },
 };
 </script>
 
